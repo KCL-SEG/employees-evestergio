@@ -3,10 +3,13 @@
 from abc import ABC, abstractmethod
 
 class Employee:
-    def __init__(self, name, salary, commission):
+    def __init__(self, name, salary, commission=None):
         self.name = name
         self.salary = salary
-        self.commission = commission
+        if commission == None:
+            self.commission = NoCommission()
+        else: 
+            self.commission = commission
 
     def get_pay(self):
         return self.salary.get_pay() + self.commission.get_pay()
@@ -97,10 +100,10 @@ class ContractCommission(Commission):
         return (f' and receives a commission for {self.contracts_landed} contract(s) at {self.commission_per_contract}/contract')
 
 # Billie works on a monthly salary of 4000.  Their total pay is 4000.
-billie = Employee('Billie', MonthlySalary(4000), NoCommission())
+billie = Employee('Billie', MonthlySalary(4000))
 
 # Charlie works on a contract of 100 hours at 25/hour.  Their total pay is 2500.
-charlie = Employee('Charlie', HourlySalary(25, 100), NoCommission())
+charlie = Employee('Charlie', HourlySalary(25, 100))
 
 # Renee works on a monthly salary of 3000 and receives a commission for 4 contract(s) at 200/contract.  Their total pay is 3800.
 renee = Employee('Renee', MonthlySalary(3000), ContractCommission(4, 200))
